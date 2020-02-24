@@ -85,7 +85,7 @@ class DoublyLinkedList:
     Returns the value of the removed Node."""
 
     def remove_from_head(self):
-        prev = self.head
+        prev = self.head.value
         self.delete(self.head)
         return prev
 
@@ -116,21 +116,15 @@ class DoublyLinkedList:
     List and inserts it as the new head node of the List."""
 
     def move_to_front(self, node):
-        value = node.value
-        # if node is self.head:
-        #     return
-        # value =node.value
-        # if node is self.tail:
-        #     self.remove_from_tail()
-        # else:
-        #     node.delete()
-        # self.add_to_head(value)
+        self.delete(node)
+        self.add_to_head(node.value)
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List."""
 
     def move_to_end(self, node):
-        pass
+        self.delete(node)
+        self.add_to_tail(node.value)
 
     """Removes a node from the list and handles cases where
     the node was the head or the tail"""
@@ -157,9 +151,31 @@ class DoublyLinkedList:
             return
 
     """Returns the highest value currently in the list"""
+    def print_list(self,node ):
+        while(node is not None):
+            print( node.value )
+            print(f"object value is  {node}")
+            last = node
+            node = node.next
+
+        print("\nTraversal in reverse direction")
+        while(last is not None):
+            print(f"object value is  {last}")
+            print (last.value)
+            last = last.prev
 
     def get_max(self):
-        while self.head.next:
-            print(f"self.head = {self.head}")
-            self.head
-        pass
+        print (f"self.head={self.head}\nself.tail={self.tail}\nself.length={self.length}")
+        self.print_list(self.head)
+        self.print_list(self.tail)
+        final = self.head.value
+        print (self.head.value)
+        rel=self.head
+        for i in range(self.length):
+            if rel.next:
+                rel=rel.next
+                if final < rel.value:
+                    final = rel.value
+
+
+        return final
