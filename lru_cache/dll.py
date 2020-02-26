@@ -1,15 +1,14 @@
 """Each ListNode holds a reference to its previous node
 as well as its next node in the List."""
 
-
 class ListNode(object):
     def __init__(self, value, prev=None, next=None):
         self.value = value
         self.prev = prev
         self.next = next
-    def __repr__(self):
-        return f"ListNode =({self.value})"
 
+    def __repr__(self):
+        return f"ListNode({self.value})"
     """Wrap the given value in a ListNode and insert it
     after this node. Note that this node could already
     have a next node it is point to."""
@@ -45,6 +44,10 @@ the list's head and tail nodes."""
 
 
 class DoublyLinkedList(object):
+    def __repr__(self):
+        return f"dll head =({self.head.value})"
+    def __str__(self):
+        return f"dll head =({self.head.value})"
     def __init__(self, node=None):
         self.head = node
         self.tail = node
@@ -77,8 +80,6 @@ class DoublyLinkedList(object):
         print(new_node)
         return self.head
 
-    def __repr__(self):
-        return f"dll head =({self.head.value})\ndll tail =({self.tail.value})"
 
         #what do we need to think about?
         #what are the scnearios?
@@ -196,11 +197,12 @@ class DoublyLinkedList(object):
 
 
 
-mynode=DoublyLinkedList()
+dict={}
 
-mynode.add_to_head(5)
-mynode.add_to_tail(4)
-mynode.add_to_head(6)
-mynode.add_to_head(7)
-mynode.add_to_head(8)
-print(mynode.get_max())
+dict[0]=1
+for i in range(5):
+    dict[i] = i**i
+
+print(dict)
+for i in range(4):
+    print(dict.popitem())
