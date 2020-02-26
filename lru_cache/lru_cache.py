@@ -15,7 +15,8 @@ class LRUCache:
 
     def get(self, key):
         # super super simple as we no longer have to use the DLL
-        # we need to remove the item with pop())
+        # we need to remove  the item with pop())
+        # pop also will return the value
         # and then reinsert into the list to establish order
         if key in self.storageMap.keys():
             value = self.storageMap.pop(key)
@@ -35,9 +36,17 @@ class LRUCache:
         else:
             if self.currentNodesCount == self.limit:
                 # remove old reference to enforce order
-                self.storageMap.pop(list(self.storageMap.keys())[0])
-                # add the new key to the storage map
-                # thuse setting it as most recently accessed
+
+                # this is  the most complicated part of the class
+                # we get the keys() which we need to find the first inserted,
+                #we can access this list of keys as a list, and then use
+                # the square brackets to find the first key [0]
+                #once we have that first key, we pop it out of the map
+                self.storageMap.pop(
+                    list(self.storageMap.keys())[0]
+                )
+                # readd the key and the value to the storage map
+                # thue setting it as most recently accessed
                 self.storageMap[key] = value
             else:
                 # increment the current node count
