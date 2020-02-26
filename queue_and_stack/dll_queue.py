@@ -24,5 +24,4 @@ class Queue:
         return self.storage.length
 
 
-q=Queue()
-print(q.len())
+

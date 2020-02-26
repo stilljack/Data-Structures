@@ -163,15 +163,15 @@ class DoublyLinkedList(object):
         if node is None:
             node =self.head
         while(node is not None):
-            print( node.value )
-            print(f"object value is  {node}")
+          #  print( node.value )
+          #  print(f"object value is  {node}")
             last = node
             node = node.next
 
         print("\nTraversal in reverse direction")
         while(last is not None):
-            print(f"object value is  {last}")
-            print (last.value)
+         #   print(f"object value is  {last}")
+         #   print (last.value)
             last = last.prev
 
     def get_max(self):
@@ -196,11 +196,4 @@ class DoublyLinkedList(object):
 
 
 
-mynode=DoublyLinkedList()
-
-mynode.add_to_head(5)
-mynode.add_to_tail(4)
-mynode.add_to_head(6)
-mynode.add_to_head(7)
-mynode.add_to_head(8)
-print(mynode.get_max())
+#

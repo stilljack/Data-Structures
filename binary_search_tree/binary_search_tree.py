@@ -16,12 +16,12 @@ class BinarySearchTree:
     def insert(self, value):
         if not self.value:
             self.value=value
-        if value>self.value:
+        #lean right
+        if value>=self.value:
             if self.right:
                 self.right.insert(value)
             else:
                 self.right = BinarySearchTree(value)
-        #lean left
         elif self.left:
             #self.left exists
             if self.left:
@@ -72,8 +72,33 @@ class BinarySearchTree:
     # Print all the values in order from low to
     # Hint:  Use a recursive, depth first traversal
 
+    #Gonna try this as a decorator pattern
     def in_order_print(self, node):
-        pass
+        final = []
+        def iop_helper(node):
+            nonlocal final
+            if node:
+                iop_helper(node.left)
+
+                final.append(node.value)
+
+                iop_helper(node.right)
+
+        iop_helper(node)
+        for result in final[0:]:
+            print(result)
+        return final
+    # finallist =[]
+        # lefts =[]
+        # rights = []
+        # if isinstance(self.left,BinarySearchTree):
+        #     lefts= self.in_order_print(self.left)
+        #
+        # if isinstance(self.right,BinarySearchTree):
+        #     rights = self.in_order_print(self.right)
+        # finallist =lefts + [self. value] + rights
+        # print(finallist)
+        # return finallist
 
 
     # Print the value of every node, starting with the given node,
@@ -91,8 +116,58 @@ class BinarySearchTree:
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self, node):
-        pass
+        final = []
+
+        def preorder_helper(node):
+            nonlocal final
+            if node:
+                final.append(node.value)
+
+                preorder_helper(node.left)
+
+                preorder_helper(node.right)
+
+        preorder_helper(node)
+        for result in final[0:]:
+            print(result)
+        return final
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
-        pass
+        final = []
+
+        def post_order_helper(node):
+            nonlocal final
+            if node:
+                post_order_helper(node.left)
+
+                post_order_helper(node.right)
+
+                final.append(node.value)
+
+        post_order_helper(node)
+        for result in final[0:]:
+            print(result)
+        return final
+
+class test():
+    def try1(self):
+        self.bst = BinarySearchTree(1)
+        self.bst.insert(8)
+        self.bst.insert(5)
+        self.bst.insert(7)
+        self.bst.insert(6)
+        self.bst.insert(3)
+        self.bst.insert(4)
+        self.bst.insert(2)
+        print(f"in order print return ="
+              f"{self.bst.in_order_print(self.bst)}")
+        print(f"pre order print return ="
+              f"{self.bst.pre_order_dft(self.bst)}")
+        print(f"post order print return ="
+              f"{self.bst.post_order_dft(self.bst)}")
+
+
+test =test()
+
+test.try1()
