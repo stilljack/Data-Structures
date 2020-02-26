@@ -194,3 +194,15 @@ class DoublyLinkedList(object):
         print("final:")
         print(final)
         return final
+
+
+
+dict={}
+
+dict[0]=1
+for i in range(5):
+    dict[i] = i**i
+
+print(dict)
+for i in range(4):
+    print(dict.popitem())
