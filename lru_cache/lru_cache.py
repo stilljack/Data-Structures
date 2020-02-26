@@ -1,13 +1,20 @@
+from doubly_linked_list import *
+
+
 class LRUCache:
     """
-    Our LRUCache class keeps track of the max number of nodes it
-    can hold, the current number of nodes it is holding, a doubly-
-    linked list that holds the key-value entries in the correct
-    order, as well as a storage dict that provides fast access
-    to every node stored in the cache.
-    """
+     Our LRUCache class keeps track of the max number of nodes it
+     can hold, the current number of nodes it is holding, a doubly-
+     linked list that holds the key-value entries in the correct
+     order, as well as a storage dict that provides fast access
+     to every node stored in the cache.
+     """
+
     def __init__(self, limit=10):
-        pass
+        self.limit = limit
+        self.currentNodesCount = 0
+        self.storageMap = {}
+        self.dll = DoublyLinkedList()
 
     """
     Retrieves the value associated with the given key. Also
@@ -16,8 +23,24 @@ class LRUCache:
     Returns the value associated with the key or None if the
     key-value pair doesn't exist in the cache.
     """
+
     def get(self, key):
-        pass
+        #check if key is in cache
+        if key in self.storageMap.keys():
+            #retrieve the node with the value
+            nodeToHandle=self.storageMap[key]
+            #key/value pairs are stored in the nodes as tuples, thus access
+            #the value here
+            value=nodeToHandle.value[1]
+            #make a new node at the head and updatedict entry
+            self.storageMap[key] = self.dll.add_to_head((key,value))
+            #delete the original node
+            self.dll.delete(nodeToHandle)
+            #finall return the value
+            return value
+        else:
+            return None
+
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -29,5 +52,47 @@ class LRUCache:
     want to overwrite the old value associated with the key with
     the newly-specified value.
     """
+
     def set(self, key, value):
+        # first we need to see if the key is in the cache
+        if key in self.storageMap.keys():
+            print("key in storage map")
+            #getthe node out of the dll from the dict
+            nodeToHandle = self.storageMap[key]
+
+            #delete the node
+            self.dll.delete(nodeToHandle)
+            #make a new node at the headand dict entry
+            self.storageMap[key] = self.dll.add_to_head((key,value))
+            print (f"storagemap ref{self.storageMap[key]}"
+                   f"\nnodes.value={self.storageMap[key].value}")
+        else:
+            if self.currentNodesCount == self.limit:
+                # pop the tail from the dll, grab the k/v
+                # remove that key from the storage map
+                keyToRemove: [] = self.dll.remove_from_tail()
+                self.storageMap.pop(keyToRemove[0], None)
+                #add the new key to the storage map and to the dll
+                self.storageMap[key] = self.dll.add_to_head((key,value))
+            else:
+                # increment the current node count
+                self.currentNodesCount += 1
+                # add the key at the front of the list
+                # and link the dict to the node
+                self.storageMap[key] = self.dll.add_to_head((key,value))
+                print (f"storagemap ref{self.storageMap[key]}"
+                       f"\nnodes.value={self.storageMap[key].value}")
+        res =[v.value for k,v in self.storageMap.items()]
+        print(f"total map is {res}")
+    def __setfinisher__(self, key, value):
         pass
+
+cache =LRUCache(3)
+dll=DoublyLinkedList()
+dll.add_to_head(5)
+print(dll)
+cache.set('item1', 'a')
+cache.set('item2', 'b')
+cache.set('item3', 'c')
+
+cache.set('item2', 'z')

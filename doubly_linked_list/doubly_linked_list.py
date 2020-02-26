@@ -2,7 +2,7 @@
 as well as its next node in the List."""
 
 
-class ListNode:
+class ListNode(object):
     def __init__(self, value, prev=None, next=None):
         self.value = value
         self.prev = prev
@@ -42,7 +42,7 @@ class ListNode:
 the list's head and tail nodes."""
 
 
-class DoublyLinkedList:
+class DoublyLinkedList(object):
     def __init__(self, node=None):
         self.head = node
         self.tail = node
@@ -62,6 +62,7 @@ class DoublyLinkedList:
             #empty list
             self.head=new_node
             self.tail=new_node
+
         else:
             # we know the list is populated and we must update without losing data
             #so set self.head to the .next of the new node
@@ -70,6 +71,9 @@ class DoublyLinkedList:
             self.head.prev=new_node
             #finally update nself.head
             self.head = new_node
+        print(self.head)
+        print(new_node)
+        return self.head
 
 
         #what do we need to think about?
@@ -151,7 +155,9 @@ class DoublyLinkedList:
             return
 
     """Returns the highest value currently in the list"""
-    def print_list(self,node ):
+    def print_list(self, node=None):
+        if node is None:
+            node =self.head
         while(node is not None):
             print( node.value )
             print(f"object value is  {node}")
@@ -165,9 +171,7 @@ class DoublyLinkedList:
             last = last.prev
 
     def get_max(self):
-        print (f"self.head={self.head}\nself.tail={self.tail}\nself.length={self.length}")
-        self.print_list(self.head)
-        self.print_list(self.tail)
+
         final = self.head.value
         print (self.head.value)
         rel=self.head
@@ -177,5 +181,22 @@ class DoublyLinkedList:
                 if final < rel.value:
                     final = rel.value
 
-
+        print (f"self.head={self.head}\nself.tail={self.tail}\nself.length={self.length}")
+        print("head:")
+        self.print_list(self.head)
+        print("tail:")
+        self.print_list(self.tail)
+        print("final:")
+        print(final)
         return final
+
+
+
+mynode=DoublyLinkedList()
+
+mynode.add_to_head(5)
+mynode.add_to_tail(4)
+mynode.add_to_head(6)
+mynode.add_to_head(7)
+mynode.add_to_head(8)
+print(mynode.get_max())
