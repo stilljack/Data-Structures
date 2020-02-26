@@ -7,6 +7,8 @@ class ListNode(object):
         self.value = value
         self.prev = prev
         self.next = next
+    def __repr__(self):
+        return f"ListNode =({self.value})"
 
     """Wrap the given value in a ListNode and insert it
     after this node. Note that this node could already
@@ -75,6 +77,8 @@ class DoublyLinkedList(object):
         print(new_node)
         return self.head
 
+    def __repr__(self):
+        return f"dll head =({self.head.value})\ndll tail =({self.tail.value})"
 
         #what do we need to think about?
         #what are the scnearios?

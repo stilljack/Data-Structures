@@ -7,6 +7,8 @@ class ListNode(object):
         self.prev = prev
         self.next = next
 
+    def __repr__(self):
+        return f"ListNode({self.value})"
     """Wrap the given value in a ListNode and insert it
     after this node. Note that this node could already
     have a next node it is point to."""
@@ -42,6 +44,10 @@ the list's head and tail nodes."""
 
 
 class DoublyLinkedList(object):
+    def __repr__(self):
+        return f"dll head =({self.head.value})"
+    def __str__(self):
+        return f"dll head =({self.head.value})"
     def __init__(self, node=None):
         self.head = node
         self.tail = node
