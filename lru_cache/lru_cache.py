@@ -2,14 +2,23 @@ from doubly_linked_list import *
 
 
 class LRUCache:
+    # this version does not use a dll at all!
+    # so arguably is faster/more efficient
+    # the worst thing from a performance
+    # standpoint is the call to list(dict)
+    # might be worth testing   to see if possibly the dll impl
+    # ends up faster or takes up less memory space, i doubt it tho
     def __init__(self, limit=10):
         self.limit = limit
         self.currentNodesCount = 0
         self.storageMap = {}
 
     def get(self, key):
+        # super super simple as we no longer have to use the DLL
+        # we need to remove the item with pop())
+        # and then reinsert into the list to establish order
         if key in self.storageMap.keys():
-            value=self.storageMap.pop(key)
+            value = self.storageMap.pop(key)
             self.storageMap[key] = value
             return value
         else:
@@ -19,49 +28,37 @@ class LRUCache:
         # first we need to see if the key is in the cache
         if key in self.storageMap.keys():
             print("key in storage map")
+            # since it's in the map, delete and then replace to
+            # reorder the cache
             self.storageMap.pop(key)
             self.storageMap[key] = value
         else:
             if self.currentNodesCount == self.limit:
+                # remove old reference to enforce order
                 self.storageMap.pop(list(self.storageMap.keys())[0])
-                # add the new key to the storage map and to the dll
+                # add the new key to the storage map
+                # thuse setting it as most recently accessed
                 self.storageMap[key] = value
             else:
                 # increment the current node count
                 self.currentNodesCount += 1
                 # add the key at the front of the list
-                # and link the dict to the node
                 self.storageMap[key] = value
-
-        print(f"storagemap ref{self.storageMap[key]}"
-              f"\nkey={key}")
-        res = [v for k, v in self.storageMap.items()]
+        # this just prints the kvs in storage map
+        res = [{k, v} for k, v in self.storageMap.items()]
         print(f"total map is {res}")
 
-class LRUCache_two:
+
+class LRUCache_value_node:
+    # this version only stores the value in the node,
+    # otherwise is quite similar to the tuple version below
 
 
-    """
-     Our LRUCache class keeps track of the max number of nodes it
-     can hold, the current number of nodes it is holding, a doubly-
-     linked list that holds the key-value entries in the correct
-     order, as well as a storage dict that provides fast access
-     to every node stored in the cache.
-
-      """
     def __init__(self, limit=10):
         self.limit = limit
         self.currentNodesCount = 0
         self.storageMap = {}
         self.dll = DoublyLinkedList()
-
-    """
-    Retrieves the value associated with the given key. Also
-    needs to move the key-value pair to the end of the order
-    such that the pair is considered most-recently used.
-    Returns the value associated with the key or None if the
-    key-value pair doesn't exist in the cache.
-    """
 
     def get(self, key):
         # check if key is in cache
@@ -81,16 +78,6 @@ class LRUCache_two:
         else:
             return None
 
-    """
-    Adds the given key-value pair to the cache. The newly-
-    added pair should be considered the most-recently used
-    entry in the cache. If the cache is already at max capacity
-    before this entry is added, then the oldest entry in the
-    cache needs to be removed to make room. Additionally, in the
-    case that the key already exists in the cache, we simply
-    want to overwrite the old value associated with the key with
-    the newly-specified value.
-    """
 
     def set(self, key, value):
         # first we need to see if the key is in the cache
@@ -123,11 +110,15 @@ class LRUCache_two:
 
         print(f"storagemap ref{self.storageMap[key]}"
               f"\nnodes.value={self.storageMap[key].value}")
-        res = [v.value for k, v in self.storageMap.items()]
+        res = [{k, v} for k, v in self.storageMap.items()]
         print(f"total map is {res}")
 
-class LRUCache_old:
 
+class LRUCache_kv_tuple:
+    # this version implements an LRUcache exactly to spec,
+    # specifically the nodes contain a tuple of the key,value
+    # this is perhaps less than optimal but it does
+    # meet the spec explicitly
 
     """
      Our LRUCache class keeps track of the max number of nodes it
@@ -209,7 +200,7 @@ class LRUCache_old:
 
         print(f"storagemap ref{self.storageMap[key]}"
               f"\nnodes.value={self.storageMap[key].value}")
-        res = [v.value for k, v in self.storageMap.items()]
+        res = [{k, v} for k, v in self.storageMap.items()]
         print(f"total map is {res}")
 
 
