@@ -1,6 +1,44 @@
 from doubly_linked_list import *
 
+
 class LRUCache:
+    def __init__(self, limit=10):
+        self.limit = limit
+        self.currentNodesCount = 0
+        self.storageMap = {}
+
+    def get(self, key):
+        if key in self.storageMap.keys():
+            value=self.storageMap.pop(key)
+            self.storageMap[key] = value
+            return value
+        else:
+            return None
+
+    def set(self, key, value):
+        # first we need to see if the key is in the cache
+        if key in self.storageMap.keys():
+            print("key in storage map")
+            self.storageMap.pop(key)
+            self.storageMap[key] = value
+        else:
+            if self.currentNodesCount == self.limit:
+                self.storageMap.pop(list(self.storageMap.keys())[0])
+                # add the new key to the storage map and to the dll
+                self.storageMap[key] = value
+            else:
+                # increment the current node count
+                self.currentNodesCount += 1
+                # add the key at the front of the list
+                # and link the dict to the node
+                self.storageMap[key] = value
+
+        print(f"storagemap ref{self.storageMap[key]}"
+              f"\nkey={key}")
+        res = [v for k, v in self.storageMap.items()]
+        print(f"total map is {res}")
+
+class LRUCache_two:
 
 
     """
