@@ -73,8 +73,8 @@ class DoublyLinkedList(object):
             self.head.prev=new_node
             #finally update nself.head
             self.head = new_node
-        print(self.head)
-        print(new_node)
+        #print(self.head)
+        #print(new_node)
         return self.head
 
     def __repr__(self):
@@ -139,11 +139,11 @@ class DoublyLinkedList(object):
 
     def delete(self, node):
         if not self.head and not self.tail:
-            print(f"ERROR delete method called for {node.key}, list is empty ")
+     #       print(f"ERROR delete method called for {node.key}, list is empty ")
             return
         self.length -= 1
         if self.head == self.tail == node:
-            print(f"self.head == self.tail == node \n{self.head} == {self.tail} == {node}")
+ #           print(f"self.head == self.tail == node \n{self.head} == {self.tail} == {node}")
             self.head = None
             self.tail = None
             return
@@ -168,7 +168,7 @@ class DoublyLinkedList(object):
             last = node
             node = node.next
 
-        print("\nTraversal in reverse direction")
+       # print("\nTraversal in reverse direction")
         while(last is not None):
          #   print(f"object value is  {last}")
          #   print (last.value)
@@ -177,7 +177,7 @@ class DoublyLinkedList(object):
     def get_max(self):
 
         final = self.head.value
-        print (self.head.value)
+     #   print (self.head.value)
         rel=self.head
         for i in range(self.length):
             if rel.next:
@@ -185,13 +185,13 @@ class DoublyLinkedList(object):
                 if final < rel.value:
                     final = rel.value
 
-        print (f"self.head={self.head}\nself.tail={self.tail}\nself.length={self.length}")
-        print("head:")
-        self.print_list(self.head)
-        print("tail:")
-        self.print_list(self.tail)
-        print("final:")
-        print(final)
+    #    print (f"self.head={self.head}\nself.tail={self.tail}\nself.length={self.length}")
+    #    print("head:")
+  #      self.print_list(self.head)
+   #     print("tail:")
+    #    self.print_list(self.tail)
+    #    print("final:")
+   #     print(final)
         return final
 
 

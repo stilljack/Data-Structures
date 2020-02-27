@@ -1,7 +1,8 @@
 import sys
+
 sys.path.append('../queue_and_stack')
 from dll_queue import Queue
-from dll_stack import Stack,DoublyLinkedList
+from dll_stack import Stack, DoublyLinkedList
 
 import collections
 
@@ -15,30 +16,26 @@ class BinarySearchTree:
     # Insert the given value into the tree
     def insert(self, value):
         if not self.value:
-            self.value=value
-        #lean right
-        if value>=self.value:
+            self.value = BinarySearchTree(value)
+        # lean right
+        if value >= self.value:
             if self.right:
                 self.right.insert(value)
             else:
                 self.right = BinarySearchTree(value)
-        elif self.left:
-            #self.left exists
+        else:
+            # self.left exists
             if self.left:
                 self.left.insert(value)
             else:
-                self.left=BinarySearchTree(value)
-        else:
-            self.left=BinarySearchTree(value)
-
-
+                self.left = BinarySearchTree(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
         if self.value == target:
             return True
-        if target>self.value:
+        if target >= self.value:
             if self.right:
                 return self.right.contains(target)
             else:
@@ -48,7 +45,6 @@ class BinarySearchTree:
                 return self.left.contains(target)
             else:
                 return False
-
 
     # Return the maximum value found in the tree
     def get_max(self):
@@ -66,15 +62,15 @@ class BinarySearchTree:
         if self.left:
             self.left.for_each(cb)
 
-
     # DAY 2 Project -----------------------
 
     # Print all the values in order from low to
     # Hint:  Use a recursive, depth first traversal
 
-    #Gonna try this as a decorator pattern
+    # Gonna try this as a decorator pattern
     def in_order_print(self, node):
         final = []
+
         def iop_helper(node):
             nonlocal final
             if node:
@@ -85,31 +81,65 @@ class BinarySearchTree:
                 iop_helper(node.right)
 
         iop_helper(node)
-        for result in final[0:]:
+        for result in final:
             print(result)
         return final
-    # finallist =[]
-        # lefts =[]
-        # rights = []
-        # if isinstance(self.left,BinarySearchTree):
-        #     lefts= self.in_order_print(self.left)
-        #
-        # if isinstance(self.right,BinarySearchTree):
-        #     rights = self.in_order_print(self.right)
-        # finallist =lefts + [self. value] + rights
-        # print(finallist)
-        # return finallist
 
+    # finallist =[]
+    # lefts =[]
+    # rights = []
+    # if isinstance(self.left,BinarySearchTree):
+    #     lefts= self.in_order_print(self.left)
+    #
+    # if isinstance(self.right,BinarySearchTree):
+    #     rights = self.in_order_print(self.right)
+    # finallist =lefts + [self. value] + rights
+    # print(finallist)
+    # return finallist
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        stack = Queue()
+        # root into stack
+        stack.enqueue(node)
+        #print(f"init stack len ={stack.len}")
+        while stack.len != 0:
+            temp: BinarySearchTree = stack.dequeue()
+            if temp:
+                if temp.right:
+                    stack.enqueue(temp.right)
+                if temp.left:
+                    stack.enqueue(temp.left)
+                print(temp.value)
+            else:
+                break
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        stack = Stack()
+        # root into stack
+        stack.push(node)
+        #print(f"init stack len ={stack.len}")
+        while stack.len != 0:
+            temp: BinarySearchTree = stack.pop()
+            if temp:
+                if temp.right:
+                    stack.push(temp.right)
+                if temp.left:
+                    stack.push(temp.left)
+                print(temp.value)
+            else:
+                break
+            # stacj
+
+    # root to stack push
+    # while stack not empty
+    # pop top item out of stack into temp
+    # do the thing?
+    # if temp has right, put right into stack
+    # if temp has left, put into stack
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
@@ -150,6 +180,7 @@ class BinarySearchTree:
             print(result)
         return final
 
+
 class test():
     def try1(self):
         self.bst = BinarySearchTree(1)
@@ -160,14 +191,16 @@ class test():
         self.bst.insert(3)
         self.bst.insert(4)
         self.bst.insert(2)
-        print(f"in order print return ="
-              f"{self.bst.in_order_print(self.bst)}")
-        print(f"pre order print return ="
-              f"{self.bst.pre_order_dft(self.bst)}")
-        print(f"post order print return ="
-              f"{self.bst.post_order_dft(self.bst)}")
+        # print(f"in order print return ="
+        #       f"{self.bst.in_order_print(self.bst)}")
+        # print(f"pre order print return ="
+        #       f"{self.bst.pre_order_dft(self.bst)}")
+        # print(f"post order print return ="
+        #       f"{self.bst.post_order_dft(self.bst)}")
+        print(f"^dft print^ ="
+              f"{self.bst.dft_print(self.bst)}")
 
 
-test =test()
+test = test()
 
 test.try1()

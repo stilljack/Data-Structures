@@ -17,7 +17,7 @@ class Queue:
         if self.storage.head:
             return self.storage.remove_from_head()
         else:
-            print(f"nothing to offer, sorry [internall dll.length = {self.len()}]")
+     #       print(f"nothing to offer, sorry [internall dll.length = {self.len()}]")
             return None
 
     def len(self):
